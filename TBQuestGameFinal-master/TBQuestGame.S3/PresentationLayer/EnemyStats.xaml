@@ -1,0 +1,48 @@
+﻿<Window x:Class="TBQuestGame.EnemyStats"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TBQuestGame"
+        mc:Ignorable="d"
+        Title="EnemyStats" Height="450" Width="400" ResizeMode="NoResize" Closing="Window_Closing" Icon="/Images/sword-icon.png">
+    <Window.Resources>
+        <Style x:Key="TextLabel" TargetType="Label">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Padding" Value="15"/>
+        </Style>
+        <Style x:Key="TextBoxValue" TargetType="TextBox">
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="0,5,0,0"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="40*"/>
+        </Grid.RowDefinitions>
+        <Border BorderBrush="Black" BorderThickness="3" Width="65" Height="65">
+            <Image x:Name="EnemyStatsPicture" Width="64" Height="64" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Border>
+        <Label x:Name="EnemyNameLabel" Style="{StaticResource TextLabel}" Content="Name: " Grid.Row="1"/>
+        <TextBox x:Name="EnemyName" Style="{StaticResource TextBoxValue}" Text="{Binding EnemyName, FallbackValue='Currently Not Fighting'}" Grid.Row="1"/>
+        <Label x:Name="EnemyLevelLabel" Style="{StaticResource TextLabel}" Content="Level: " Grid.Row="2"/>
+        <TextBox x:Name="EnemyLevel" Style="{StaticResource TextBoxValue}" Text="{Binding EnemyLevel, FallbackValue='Currently Not Fighting'}" Grid.Row="2"/>
+        <Label x:Name="EnemyBaseDamageLabel" Style="{StaticResource TextLabel}" Content="Base DMG: " Grid.Row="3"/>
+        <TextBox x:Name="EnemyBaseDamage" Style="{StaticResource TextBoxValue}" Text="{Binding EnemyDamage, FallbackValue='Currently Not Fighting'}" Grid.Row="3"/>
+    </Grid>
+</Window>

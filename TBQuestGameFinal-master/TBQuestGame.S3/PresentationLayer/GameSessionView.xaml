@@ -1,0 +1,283 @@
+﻿<Window x:Class="TBQuestGame.PresentationLayer.GameSessionView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TBQuestGame.PresentationLayer"
+        mc:Ignorable="d"
+     Background="LightGray" Icon="/Images/sword-icon.png" Title="Swendiver - Main Game" Height="595.65" Width="950.084" ResizeMode="NoResize" Closed="Close_Application">
+
+    <Window.Resources>
+        <Style x:Key="statBarLabels" TargetType="Label">
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="FontWeight" Value="bold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="40"/>
+        </Style>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+        <Style x:Key="CommandBoxStyle" TargetType="TextBox">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="Width" Value="550"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5,5,5,5"/>
+        </Style>
+        <Style x:Key="sectionLabel" TargetType="Label">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style x:Key="HeaderStyle" TargetType="Label">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+           <!-- <ColumnDefinition Width="195*"/> -->
+            <ColumnDefinition Width="749*"/>
+            <ColumnDefinition Width="195*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="230"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="0" Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2.6*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+        <Label x:Name="LocationLabel" Content="Current Location" Style ="{StaticResource HeaderStyle}" Width="154" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="18"/>
+            </Grid>
+        
+            <TextBox x:Name="LocationName" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding CurrentLocation.Name}" IsReadOnly="True" Style="{StaticResource CommandBoxStyle}"  Height="40" Width="200" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" TextChanged="LocationName_TextChanged"/>
+            
+        </Grid>
+
+        <TextBox x:Name="DialogueBox" Text="{Binding LocationMessage, Mode=OneWay}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsReadOnly="True" Width="480" Height="75" Style="{StaticResource CommandBoxStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="0"/>
+        <Image x:Name="speakerIcon" Width="53" Height="53" Grid.Column="0"/>
+        <Button x:Name="GameOptions"  Content="Menu" Style="{StaticResource ButtonStyle}" VerticalAlignment="Top" HorizontalAlignment="Right" Click="GameOptions_Click" Grid.Column="1"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1">
+            <Image x:Name="WarningPicture" Source="{Binding LocationWarningImage}" Margin="0,-1,0,0" Width="60" Height="45"/>
+            <Button x:Name="OpenMap" Style="{StaticResource ButtonStyle}"  Click="OpenMap_Click" >
+            <DockPanel>
+                <Image Source="/Images/MapIcon.png" Width="32" Height="32"/>
+                <ContentControl Content="Map" Margin="0,3,0,0"/>
+            </DockPanel>
+
+        </Button>
+        </StackPanel>
+        <TextBox x:Name="TipsBox" Width="480" Height="75" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Style="{StaticResource CommandBoxStyle}" IsReadOnly="True" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Grid.Column="0"/>
+        <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,230,0,0.4" Grid.RowSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="535"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <ProgressBar x:Name="playerShieldBar" Value="{Binding PlayerShield}" Maximum="{Binding PlayerShieldMax}" Width="375" Height="30" Background="Orange" Margin="2.5" Foreground="Yellow" Grid.Column="0" HorizontalAlignment="Left"  />
+                    <Label x:Name="playerShieldBarLabel" Content="{Binding PlayerShield}" Style="{StaticResource statBarLabels}" Margin="2.5" Grid.Column ="0"  />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <ProgressBar x:Name="playerHealthBar" Width="400" Height="30" Background="Red" Foreground="Green" Value="{Binding Path=PlayerHealth}" Margin="2.5" Grid.Column="0" HorizontalAlignment="Left" />
+                    <Label x:Name="playerHealthBarLabel" Content="{Binding PlayerHealth}"  Style="{StaticResource statBarLabels}" Margin="2.5" Grid.Column="0"  />
+
+                </StackPanel>
+                <TextBox x:Name="CommandBox" Style="{StaticResource CommandBoxStyle}" Grid.Column="0" Width="529" Height="65" KeyDown="CommandBox_KeyDown" />
+            </StackPanel>
+
+            <Grid Grid.Column="1">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label Style="{StaticResource HeaderStyle}" HorizontalAlignment="Center" Content="Utilities"/>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
+
+                    <Button x:Name="North_Button" Style="{StaticResource ButtonStyle}" Width="95" Margin="0,0,5,0" Click="Button_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Images/MapIcon.png" Width="32" Height="32" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <ContentControl Margin="0,5,0,6">North</ContentControl>
+                        </StackPanel>
+
+                    </Button>
+                    <Button x:Name="East_Button" Style="{StaticResource ButtonStyle}" Width="95" Margin="0,0,5,0" Click="Button_Click_1">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/TBQuestGame;component/Images/MapIcon.png" Width="32" Height="32" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <ContentControl Margin="0,5,0,6" Content="East"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="South_Button" Style="{StaticResource ButtonStyle}" Width="95" Margin="0,0,5,0" Click="Button_Click_2">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/TBQuestGame;component/Images/MapIcon.png" Width="32" Height="32" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <ContentControl Margin="0,5,0,6" Content="South"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="West_Button" Style="{StaticResource ButtonStyle}" Width="95" Margin="0,0,5,0" Click="Button_Click_3">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/TBQuestGame;component/Images/MapIcon.png" Width="32" Height="32" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <ContentControl Margin="0,5,0,6" Content="West"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center">
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center">
+                    <Button x:Name="AttackButton" Background="red" Style="{StaticResource ButtonStyle}" Margin="2.5" Content="Attack" Grid.Column="1" Click="AttackButton_Click"/>
+                    <Button x:Name="InventoryButton" Background="PeachPuff" Style="{StaticResource ButtonStyle}" Margin ="2.5" Content="Inventory" Grid.Column="1" Click="InventoryButton_Click"/>
+                    <Button x:Name="SkillsButton" Background="PeachPuff" Style="{StaticResource ButtonStyle}" Margin="2.5" Content="Admin" Grid.Column="1" Click="SkillsButton_Click"/>
+
+                </StackPanel>
+
+
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,0,0.4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0"   />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="26"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Content="Location and Tasks" Grid.Row="0" Style="{StaticResource sectionLabel}" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                <TabControl Grid.Row="1" Background="LightGray">
+                <TabItem>
+                        <TabItem.Header>
+                            <Label Content="AvailableLocations" MouseLeftButtonDown="Label_MouseLeftButtonDown"></Label></TabItem.Header>
+                        <DataGrid x:Name="AvailableLocationsGrid" ItemsSource="{Binding AccessibleLocations}" AutoGenerateColumns="False" >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn x:Name="LocationNames" IsReadOnly="True"
+                                Header="Location Name"
+                                Width="*">
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding StringFormat="{}{0}">
+                                            <Binding Path="Name"/>
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn x:Name="LocationDirection" IsReadOnly="True"
+                                Header="Direction"
+                                Width="100">
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding StringFormat="{}{0}">
+                                            <Binding Path="Direction" />
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
+               <!-- <TabItem Header="Tasks" Background="LightGray">
+                          
+                    <ListBox x:Name="TaskList" BorderBrush="Black" BorderThickness="2" Background="LightGray" Height="176" VerticalAlignment="Bottom">
+                            <ListBoxItem Background="LightBlue" BorderBrush="Black" BorderThickness="2">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/Images/sword-icon.png" Height="32" Width="32"/>
+                                    <TextBlock FontWeight="Bold" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">[30]</TextBlock>
+                                    <TextBlock FontWeight="Bold" FontSize="15.5" VerticalAlignment="Center" HorizontalAlignment="Center"> Exterminate Spiders</TextBlock>
+                                </StackPanel>
+                            </ListBoxItem>
+                        </ListBox>
+                    </TabItem> -->
+                    <TabItem>
+                        <TabItem.Header>
+                            <Label x:Name="MarketLabel" Content="Market" MouseLeftButtonDown="MarketLabel_MouseLeftButtonDown" IsEnabled="False"></Label></TabItem.Header>
+                        <DataGrid x:Name="Market" ItemsSource="{Binding CurrentLocationMarket}" AutoGenerateColumns="False"  Height="125" VerticalAlignment="Top" SelectionChanged="Market_SelectionChanged" IsEnabled="False" Visibility="Hidden">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn x:Name="Name" IsReadOnly="True"
+                                Header="Buy"
+                                Width="*">
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding StringFormat="{}{0}">
+                                            <Binding Path="Name"/>
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn x:Name="Value" IsReadOnly="True"
+                                Header="Price"
+                                Width="100">
+                                    <DataGridTextColumn.Binding>
+                                        <MultiBinding StringFormat="{}{0} Gold">
+                                            <Binding Path="Value"/>
+                                        </MultiBinding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+
+                            </DataGrid.Columns>
+                        </DataGrid> 
+                    </TabItem>
+            </TabControl>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+                <Button x:Name="Buy" Content="Buy" VerticalAlignment="Top" HorizontalAlignment="Center" Width="100" Height="30" Grid.Row="4" Visibility="Hidden" Click="Buy_Click"/>
+                </Grid>
+
+            </Grid>
+
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1"  />
+
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Content="Player" Height="30" Style="{StaticResource sectionLabel}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <Label Grid.Column="1" Content="Enemy" Height="30" Style="{StaticResource sectionLabel}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <Image x:Name="PlayerPicture" Height="64" Width="64" Grid.Column="0"/>
+
+
+
+                <Image x:Name="EnemyPicture"  Height="64" Width="64" Grid.Column="1"/>
+                <ProgressBar x:Name="EnemyHealthDisplay" Visibility="Hidden" Value="{Binding Player.currentlyAttacking.Health}" Maximum="{Binding Player.currentlyAttacking.MaxHealth}" Grid.Column="1" Width="100" Height="10" HorizontalAlignment="center" Margin="0,0,0,90" Background="DarkRed" Foreground="DarkGreen" />
+                <Button Grid.Column="0" Width="100" Height="30" FontWeight="bold" FontSize="15" Margin="10" Content="Stats" VerticalAlignment="Bottom" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.513" Click="Button_Click_4"/>
+                <Button Grid.Column="1" Width="100" Height="30" FontWeight="Bold" FontSize="15" Margin="10" Content="Stats" VerticalAlignment="Bottom" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.513" Click="Button_Click_5"/>
+            </Grid>
+
+
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2"   Height="230" VerticalAlignment="Bottom"/>
+            <Label Grid.Column="1" Content="VS" Style="{StaticResource sectionLabel}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+            <Label Content="Enemies Battling" Grid.Column="2" Style="{StaticResource sectionLabel}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+            <Label x:Name="EnemiesList" Grid.Column="2" Content="List of Enemies" Style="{StaticResource HeaderStyle}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="73.2,99,73.6,99.4"/>
+
+            <ListBox x:Name="ActiveEnemies" BorderBrush="Black" BorderThickness="2" Grid.Column="2" Background="LightGray" Margin="0.2,30,-0.4,0.4" Grid.ColumnSpan="2" SelectedItem="{Binding EnemySelected}" SelectionChanged="ActiveEnemies_SelectionChanged">
+
+            </ListBox>
+
+        </Grid>
+    </Grid>
+</Window>

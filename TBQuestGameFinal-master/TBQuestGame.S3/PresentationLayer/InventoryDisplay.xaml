@@ -1,0 +1,117 @@
+﻿<Window x:Class="TBQuestGame.PresentationLayer.InventoryDisplay"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TBQuestGame.PresentationLayer"
+        mc:Ignorable="d"
+        Title="InventoryDisplay" ResizeMode="NoResize" Height="250" Width="350" Closing="Window_Closing" Icon="/Images/sword-icon.png">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Label Content="Inventory and Vicinity Loot" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" FontFamily="cambria"/>
+        <TabControl Grid.Row="1" Background="AliceBlue">
+            <TabItem x:Name="PlayerInventoryTab" Background="LightBlue">
+                <TabItem.Header>
+                    <Label Content="Inventory" MouseLeftButtonDown="Label_MouseLeftButtonDown"/>
+                </TabItem.Header>
+                
+                <DataGrid x:Name="playerInventoryGrid" ItemsSource="{Binding PlayerInventory}" AutoGenerateColumns="False" SelectionChanged="playerInventoryGrid_SelectionChanged" MouseDoubleClick="playerInventoryGrid_MouseDoubleClick"  >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn x:Name="ItemsNames" IsReadOnly="True"
+                                Header="Item Name"
+                                Width="*">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding StringFormat="{}{0}">
+                                    <Binding Path="Name"/>
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn x:Name="ItemsStack" IsReadOnly="True"
+                                Header="Stack Count"
+                                Width="100">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding StringFormat="{}{0}">
+                                    <Binding Path="ItemStackCount" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn x:Name="LevelRequirement" IsReadOnly="True"
+                                Header="Required Level"
+                                Width="100">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding StringFormat="{}{0}">
+                                    <Binding Path="LevelRequirement" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+                <!-- <ListBox x:Name="PlayerInventoryList" ItemsSource="{Binding PlayerInventory}" SelectionChanged="PlayerInventoryList_SelectionChanged" MouseDoubleClick="PlayerInventoryList_MouseDoubleClick">
+                    
+                </ListBox> -->
+            </TabItem>
+            <TabItem x:Name="EquippedTab" Background="LightBlue">
+                <TabItem.Header>
+                    <Label Content="Equipped" MouseLeftButtonDown="Label_MouseLeftButtonDown_2"/>
+                </TabItem.Header>
+                <DataGrid x:Name="playerEquippedGrid" ItemsSource="{Binding Player.EquippedItems}" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn x:Name="EquippedName" IsReadOnly="True"
+                                Header="Equipped Item"
+                                Width="*">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding StringFormat="{}{0}">
+                                    <Binding Path="Name"/>
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn> 
+                    </DataGrid.Columns>
+                </DataGrid>
+                <!--<ListBox x:Name="EquippedList" ItemsSource="{Binding PlayerEquippedItems}" MouseDoubleClick="EquippedList_MouseDoubleClick">
+                    
+                </ListBox>-->
+            </TabItem>
+            <TabItem x:Name="LocationLootTab" Background="LightBlue">
+                <TabItem.Header>
+                    <Label Content="Location's Loot" MouseLeftButtonDown="Label_MouseLeftButtonDown_1" />
+                </TabItem.Header>
+                <DataGrid x:Name="locationLootGrid" ItemsSource="{Binding LocationLootableItems}" AutoGenerateColumns="False" SelectionChanged="locationLootGrid_SelectionChanged" MouseDoubleClick="locationLootGrid_MouseDoubleClick">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn x:Name="LootItemName" IsReadOnly="True"
+                                Header="Item Name"
+                                Width="*">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding StringFormat="{}{0}">
+                                    <Binding Path="Name"/>
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn x:Name="LootableItemStack" IsReadOnly="True"
+                                Header="Stack Count"
+                                Width="100">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding StringFormat="{}{0}">
+                                    <Binding Path="ItemStackCount" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+                <!--   <ListBox x:Name="LocationLootList" ItemsSource="{Binding LocationLootableItems}" MouseDoubleClick="LocationLootList_MouseDoubleClick" SelectionChanged="LocationLootList_SelectionChanged" >
+                    
+                </ListBox>
+                -->
+            </TabItem>
+        </TabControl>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2">
+        <Button x:Name="DropItem" Content="Drop" Width="75" Height="25" Margin="0,0,10,0" Click="DropItem_Click"/>
+        <Button x:Name="DropAll" Content="Drop All" Width="75" Height="25" Click="DropAll_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
