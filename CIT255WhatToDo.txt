@@ -1,0 +1,37 @@
+Save Game 
+[What to save]
+- Location
+- Gold
+- Inventory
+- Health
+- Shield
+- Weapon 
+- Basic Properties
+- Level 
+- XP
+- isequiped etc
+- Class
+
+Load Account
+[What to Load/Set]  = is set - is load
+= Location
+= Gold
+- Inventory
+= Health
+= Shield
+= Weapon 
+= Basic Properties
+= Level 
+= XP
+= isequiped etc
+= Class
+= Username
+
+Add creation of weapon method with just the name of the weapon (for ease of saving purposes)
+
+
+
+
+Update Username
+Start Converting Main View to ICommand structure in the viewmodel
+Create seed data in the DataLP project
